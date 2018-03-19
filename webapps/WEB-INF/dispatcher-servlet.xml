@@ -11,7 +11,7 @@
 	<context:annotation-config></context:annotation-config>
 	
 	<!-- 스프링 애노테이션 적용 범위 -->
-	<context:component-scan base-package="com.web.boardgame"></context:component-scan>
+	<context:component-scan base-package="com.admin"></context:component-scan>
 	
 	<!-- ViewResolver 빈 객체 생성 -->
 	<bean id="viewResolver" 
@@ -23,7 +23,9 @@
 	<!-- MultipartFile 클래스를 사용하기 위한 bean 선언 -->
 	<bean id="multipartResolver"
 		class="org.springframework.web.multipart.commons.CommonsMultipartResolver">
-	</bean>	
+	</bean>
+	
+		
 </beans>
 
 

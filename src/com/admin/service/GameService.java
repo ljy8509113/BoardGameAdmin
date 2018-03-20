@@ -19,6 +19,7 @@ public class GameService {
 	public String modify(Game game) throws CustomException {
 		Game item = DBController.Instance().selectGameDetail(game.getGameNo());
 		String filename = item.getCoverImage();
+
 		DBController.Instance().updateGame(game);
 		
 		return filename;

@@ -16,5 +16,7 @@
 		<dt>개발상태</dt><dd>${ game.state }</dd>
 		<dt>버전</dt><dd>${ game.version }</dd>
 	</dl>
+	
+	<a href="<c:url value='/admin/gameListModify.do?gameNo=${ game.gameNo }' />">수정하기</a>
 </body>
-</html>s
+</html>

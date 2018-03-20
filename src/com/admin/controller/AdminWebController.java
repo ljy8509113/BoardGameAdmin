@@ -7,6 +7,7 @@ import java.util.List;
 import javax.servlet.http.HttpServletRequest;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.HttpRequest;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -39,15 +40,21 @@ public class AdminWebController {
 
 	// 게임리스트
 	@RequestMapping(value="/gameList.do", method=RequestMethod.GET)
-	public String gameList(Model model) {
+	public String gameList(Model model, HttpServletRequest request) {
+		String uploadPath = null;
+		
 		List<Game> list = null;
 		try {
 			list = gameService.allGame();
 		} catch (CustomException e) {
+			// TODO Auto-generated catch block
 			e.printStackTrace();
-		} //DBController.Instance().selectAllGame();
+		}
+		
+		uploadPath = fileService.getUploadPath(request);
 		
 		model.addAttribute("list", list);
+		model.addAttribute("uploadpath", uploadPath);
 		
 		return "gameList";
 	}
@@ -155,6 +162,7 @@ public class AdminWebController {
 	}
 	
 	// 게임리스트 수정 화면
+	@RequestMapping(value="/gameListModify.do", method=RequestMethod.GET)
 	public String modify(Model model, @RequestParam(value="gameNo", required=true) Integer gameNo) {
 		Game game = null;
 		
@@ -179,7 +187,9 @@ public class AdminWebController {
 	}
 	
 	// 수정 후 게임 목록으로 이동
+	@RequestMapping(value="/gameListModify.do", method=RequestMethod.POST)
 	public String modify(HttpServletRequest request,
+			Integer gameNo,
 			String title,
 			String description,
 			String state,
@@ -187,7 +197,28 @@ public class AdminWebController {
 			String fileName,
 			@RequestParam("coverImage") MultipartFile coverImage) {
 		
+		Game game = new Game();
+		game.setGameNo(gameNo);
+		game.setTitle(title);
+		game.setDescription(description);
+		game.setState(state);
+		game.setVersion(version);
+		game.setFileName(fileName);
 		
+		try {
+			String filename = fileService.add(request, coverImage);
+			game.setCoverImage(filename);
+			
+			String toDeleteFilename = gameService.modify(game);
+			
+			fileService.remove(request, toDeleteFilename);
+			
+		} catch (FileException e) {
+			System.out.println(e.getMessage());
+			request.setAttribute("error", "file");
+		} catch (CustomException e) {
+			System.out.println(e.getMessage());
+		}
 		
 		return "redirect:gameList.do";
 	}

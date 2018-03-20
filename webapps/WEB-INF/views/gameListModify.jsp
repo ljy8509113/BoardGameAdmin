@@ -38,7 +38,7 @@
 		<input type="reset" value="입력한 내용 삭제"><br>
 		
 		<a href="<c:url value='/admin/gameList.do'/>">게임 목록으로 이동</a>
-		
+		<input type="hidden" name="gameNo" value="${ game.gameNo }">
 		<input type="hidden" name="${ _csrf.parameterName }" value="${ _csrf.token }">
 	</form>
 </body>

@@ -10,9 +10,7 @@ import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.security.web.authentication.logout.SecurityContextLogoutHandler;
 import org.springframework.stereotype.Service;
-import org.springframework.transaction.annotation.Transactional;
 
-import com.database.controller.DBController;
 import com.database.dao.AdminDao;
 import com.database.dao.AuthorityDao;
 import com.database.model.Admin;
@@ -25,16 +23,22 @@ public class AdminService {
 	@Autowired
 	private BCryptPasswordEncoder passwordEncoder;
 	
-	public AdminService() {}
+	AdminDao adminDao;
+	AuthorityDao authorityDao;
+	
+	public AdminService() {
+		adminDao = new AdminDao();
+		authorityDao = new AuthorityDao();
+	}
 	
 	// id로 admin 가져오기
 	public Admin detailId(String id) throws AdminException {
-		return DBController.Instance().selectAdmin(id);
+		return adminDao.selectAdmin(id);//DBController.Instance().selectAdmin(id);
 	}
 	
 	// 권한 가져오기
 	public Authority getAuthority(Integer id) {
-		return DBController.Instance().selectAuthority(id);
+		return authorityDao.selectAuthority(id);//DBController.Instance().selectAuthority(id);
 	}
 	
 	// 로그인 한 사용자 객체 가져오기
@@ -52,7 +56,7 @@ public class AdminService {
 	// 로그인한 사용자 암호화된 비밀번호 가져와 일치하는지 비교
 	public boolean isPasswordMatched(String oldPassword) throws AdminException {
 		String id = this.getPrincipal().getUsername();
-		Admin admin = DBController.Instance().selectAdmin(id);
+		Admin admin = adminDao.selectAdmin(id); //DBController.Instance().selectAdmin(id);
 		
 		return passwordEncoder.matches(oldPassword, admin.getPassword());
 	}

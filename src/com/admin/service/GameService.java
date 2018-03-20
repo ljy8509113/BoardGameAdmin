@@ -1,31 +1,41 @@
 package com.admin.service;
 
+import java.util.List;
+
 import org.springframework.stereotype.Service;
 
-import com.database.controller.DBController;
+import com.database.dao.GameDao;
 import com.database.model.Game;
 import com.database.util.CustomException;
 
 @Service
 public class GameService {
 	
-	public GameService() {}
+	GameDao dao;
+	public GameService() {
+		dao = new GameDao();
+	}
 	
 	
 	public void add(Game game) throws CustomException {
-		DBController.Instance().insertGame(game);
+		//DBController.Instance().insertGame(game);
+		dao.insert(game);		
 	}
 	
 	public String modify(Game game) throws CustomException {
-		Game item = DBController.Instance().selectGameDetail(game.getGameNo());
+		Game item = dao.select(game.getGameNo()); //DBController.Instance().selectGameDetail(game.getGameNo());
 		String filename = item.getCoverImage();
-		DBController.Instance().updateGame(game);
+		dao.update(item);//DBController.Instance().updateGame(game);
 		
 		return filename;
 	}
 	
-	public Game detailGame(Integer gameNo) {
-		return DBController.Instance().selectGameDetail(gameNo);
+	public Game detailGame(Integer gameNo) throws CustomException {
+		return dao.select(gameNo); //DBController.Instance().selectGameDetail(gameNo);
+	}
+	
+	public List<Game> allGame() throws CustomException{
+		return dao.selectAll();
 	}
 
 }

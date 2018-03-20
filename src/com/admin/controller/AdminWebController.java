@@ -17,7 +17,6 @@ import org.springframework.web.multipart.MultipartFile;
 import com.admin.service.AdminService;
 import com.admin.service.FileService;
 import com.admin.service.GameService;
-import com.database.controller.DBController;
 import com.database.model.Admin;
 import com.database.model.Game;
 import com.database.util.AdminException;
@@ -42,8 +41,11 @@ public class AdminWebController {
 	@RequestMapping(value="/gameList.do", method=RequestMethod.GET)
 	public String gameList(Model model) {
 		List<Game> list = null;
-		
-		list = DBController.Instance().selectAllGame();
+		try {
+			list = gameService.allGame();
+		} catch (CustomException e) {
+			e.printStackTrace();
+		} //DBController.Instance().selectAllGame();
 		
 		model.addAttribute("list", list);
 		
@@ -60,7 +62,7 @@ public class AdminWebController {
 		String uploadPath = null;
 		
 		try {
-			game = DBController.Instance().selectGameDetail(gameNo);
+			game = gameService.detailGame(gameNo); //DBController.Instance().selectGameDetail(gameNo);
 			
 			filename = game.getCoverImage();
 			
@@ -76,6 +78,9 @@ public class AdminWebController {
 		} catch (UnsupportedEncodingException e) {
 			System.out.println(e.getMessage());
 			model.addAttribute("error", "encoding");
+		} catch (CustomException e) {
+			
+			e.printStackTrace();
 		}
 
 		model.addAttribute("game", game);
@@ -166,6 +171,8 @@ public class AdminWebController {
 		
 		} catch (AdminException e) {
 			System.out.println(e.getMessage());
+		} catch (CustomException e) {
+			
 		}
 		
 		return "gameListModify";

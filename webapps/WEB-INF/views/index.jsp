@@ -18,7 +18,7 @@
 		<a href="<c:url value='/logout.do'/>">로그아웃</a>
 	
 		<a href="<c:url value='/admin/gameList.do'/>">게임리스트</a>
-		<a href="<c:url value='/admin/notice.do'/>">공지사항</a>
+		<a href="<c:url value='/admin/noticeList.do'/>">공지사항</a>
 		</sec:authorize>
 	</p>
 

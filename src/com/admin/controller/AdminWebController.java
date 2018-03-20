@@ -215,7 +215,12 @@ public class AdminWebController {
 		return "redirect:gameList.do";
 	}
 	
-	
+	// 공지사항 목록
+	@RequestMapping(value="/noticList.do", method=RequestMethod.GET)
+	public String noticList(Model model) {
+		
+		return "noticeList";
+	}
 	
 	
 	

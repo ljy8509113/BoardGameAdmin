@@ -17,7 +17,8 @@
 		<sec:authorize access="hasRole('ADMIN')">
 		<a href="<c:url value='/logout.do'/>">로그아웃</a>
 	
-		<a href="<c:url value='/gameList.do'/>">게임리스트</a>
+		<a href="<c:url value='/admin/gameList.do'/>">게임리스트</a>
+		<a href="<c:url value='/admin/notice.do'/>">공지사항</a>
 		</sec:authorize>
 	</p>
 

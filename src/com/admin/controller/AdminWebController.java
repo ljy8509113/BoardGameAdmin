@@ -149,7 +149,45 @@ public class AdminWebController {
 		return "subimage";
 	}
 	
-	// 게임리스트 수정
+	// 게임리스트 수정 화면
+	public String modify(Model model, @RequestParam(value="gameNo", required=true) Integer gameNo) {
+		Game game = null;
+		
+		try {
+			String id = adminService.getPrincipal().getUsername();
+			model.addAttribute("id", id);
+		
+			Admin admin = adminService.detailId(id);
+			admin.setPassword(null);
+			model.addAttribute("admin", admin);
+		
+			game = gameService.detailGame(gameNo);
+			model.addAttribute("game", game);
+		
+		} catch (AdminException e) {
+			System.out.println(e.getMessage());
+		}
+		
+		return "gameListModify";
+	}
+	
+	// 수정 후 게임 목록으로 이동
+	public String modify(HttpServletRequest request,
+			String title,
+			String description,
+			String state,
+			String version,
+			String fileName,
+			@RequestParam("coverImage") MultipartFile coverImage) {
+		
+		
+		
+		return "redirect:gameList.do";
+	}
+	
+	
+	
+	
 	
 	
 }

@@ -16,8 +16,16 @@ public class GameService {
 		DBController.Instance().insertGame(game);
 	}
 	
-	public void modify(Game game) throws CustomException {
+	public String modify(Game game) throws CustomException {
+		Game item = DBController.Instance().selectGameDetail(game.getGameNo());
+		String filename = item.getCoverImage();
 		DBController.Instance().updateGame(game);
+		
+		return filename;
+	}
+	
+	public Game detailGame(Integer gameNo) {
+		return DBController.Instance().selectGameDetail(gameNo);
 	}
 
 }

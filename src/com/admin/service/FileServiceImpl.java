@@ -15,7 +15,8 @@ import com.database.util.FileException;
 @Service
 public class FileServiceImpl<T> implements FileService<T>{
 
-	private static final String UPLOAD_FOLDER = "/upload";
+	/*private static final String UPLOAD_FOLDER = "/upload";*/
+	private static final String UPLOAD_FOLDER = "";
 
 	@Override
 	public String add(HttpServletRequest request, MultipartFile coverImage) throws FileException {

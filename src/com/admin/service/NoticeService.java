@@ -26,16 +26,6 @@ public class NoticeService {
 	
 	public Notice select(Integer no) throws CustomException {
 		Notice notice = dao.select(no);
-		try {
-			Date regdate = notice.getRegDate();
-			DateFormat original_format = new SimpleDateFormat("yyyy-MM-dd HH:mm");
-			String date = original_format.format(regdate);
-			Date new_regdate = original_format.parse(date);
-			notice.setRegDate(new_regdate);
-		} catch (ParseException e) {
-			System.out.println(e.getMessage());
-		}
-
 		return notice;
 	}
 	

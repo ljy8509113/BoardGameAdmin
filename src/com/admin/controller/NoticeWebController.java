@@ -1,9 +1,7 @@
 package com.admin.controller;
 
-import java.text.DateFormat;
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
-import java.time.LocalDateTime;
 import java.util.Date;
 import java.util.List;
 
@@ -60,6 +58,7 @@ public class NoticeWebController {
 			model.addAttribute("admin", admin);
 			
 			notice = noticeService.select(no);
+
 		} catch (CustomException e) {
 			System.out.println(e.getMessage());
 			model.addAttribute("error", "server");
@@ -106,8 +105,6 @@ public class NoticeWebController {
 		try {
 			showdate = new SimpleDateFormat("yyyy-MM-dd'T'hh:mm").parse(showTime);
 			enddate = new SimpleDateFormat("yyyy-MM-dd'T'HH:mm").parse(endTime);
-			System.out.println(showdate);
-			System.out.println(enddate);
 			
 		} catch (ParseException e) {
 			System.out.println(e.getMessage());

@@ -22,7 +22,7 @@
 				<td>${ notice.no }</td>
 				<td><a href="<c:url value='/admin/noticedetail.do?no=${ notice.no }' />">${ notice.title }</a></td>
 				<td>
-				<fmt:formatDate value="${ notice.regDate }" pattern="yyyy-MM-dd HH:mm:ss" /></td>
+				<fmt:formatDate value="${ notice.regDate }" type="both" pattern="yyyy-MM-dd HH:mm:ss" /></td>
 			</tr>
 		</c:forEach>
 		</tbody>

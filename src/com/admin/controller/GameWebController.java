@@ -26,7 +26,7 @@ import com.database.util.FileException;
 
 @Controller
 @RequestMapping("/admin")
-public class AdminWebController {
+public class GameWebController {
 	
 	@Autowired
 	private AdminService adminService;
@@ -47,8 +47,7 @@ public class AdminWebController {
 		try {
 			list = gameService.allGame();
 		} catch (CustomException e) {
-			// TODO Auto-generated catch block
-			e.printStackTrace();
+			model.addAttribute("error", "server");
 		}
 		
 		uploadPath = fileService.getUploadPath(request);
@@ -222,16 +221,6 @@ public class AdminWebController {
 		
 		return "redirect:gameList.do";
 	}
-	
-	// 공지사항 목록
-	@RequestMapping(value="/noticList.do", method=RequestMethod.GET)
-	public String noticList(Model model) {
-		
-		return "noticeList";
-	}
-	
-	
-	
 	
 }
 

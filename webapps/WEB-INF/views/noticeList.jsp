@@ -10,20 +10,23 @@
 	<table>
 		<thead>
 			<tr>
-				<th>게임</th>
 				<th>번호</th>
 				<th>제목</th>
 				<th>등록일</th>
 			</tr>
 		</thead>
 		<tbody>
+		<c:forEach items="${ list }" var="notice">
 			<tr>
-				<td>${ notice.gameNo }</td>
 				<td>${ notice.no }</td>
-				<td>${ notice.title }</td>
+				<td><a href="<c:url value='/admin/noticedetail.do?no=${ notice.no }' />">${ notice.title }</a></td>
 				<td>${ notice.regDate }</td>
 			</tr>
+		</c:forEach>
 		</tbody>
 	</table>
+	<div>
+		<a href="<c:url value='/admin/noticeAdd.do' />">글쓰기</a>
+	</div>
 </body>
 </html>
